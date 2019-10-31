@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  Alert,
   SafeAreaView,
   AsyncStorage,
   StyleSheet,
@@ -11,9 +12,23 @@ import {
 
 import logo from "../assets/logo.png";
 import SpotList from "../components/SpotList";
+import socketio from "socket.io-client";
 
 export default function List({ navigation }) {
   const [techs, setTechs] = useState([]);
+
+  useEffect(() => {
+    AsyncStorage.getItem("user").then(user_id => {
+      const socket = socketio("http://192.168.1.7:3333", {
+        query: { user_id }
+      });
+
+      socket.on("booking_response", booking => {
+        Alert.alert(`Your reservation at company ${booking.spot.company} at 
+        ${booking.date} was ${booking.approved ? "APPROVED" : "REJECTED"}.`);
+      });
+    });
+  }, []);
 
   useEffect(() => {
     AsyncStorage.getItem("techs").then(storagedTechs => {
