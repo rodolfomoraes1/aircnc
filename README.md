@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="Aircnc" src="banner/screen.png" width="250px" />
+    <img alt="Aircnc" src="banner/screen.png" width="550px" />
 </h1>
 
 ## :rocket: Technologies
